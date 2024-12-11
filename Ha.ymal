@@ -78,22 +78,7 @@ action:
       - condition: template
         value_template: "{{ should_skip_notification }}"
     then:
-      - stop: "Skipping notification for being too soon."
-
-  # Send notification without image first.
-  - repeat:
-      for_each: "{{ notify_device }}"
-      sequence:
-        - service: "notify.mobile_app_{{ device_attr(repeat.item, 'name') | slugify }}"
-          data:
-            title: "{{ trigger.from_state.attributes.friendly_name }}"
-            message: ""
-            data:
-              tag: "{{ trigger.to_state.context.id }}"
-              ttl: 0
-              priority: high
-              url: "app://com.mcu.reolink"
-              clickAction: "app://com.mcu.reolink"
+      - stop: "Skipping notification for being too soon.
 
   # Create camera snapshot
   - service: camera.snapshot
