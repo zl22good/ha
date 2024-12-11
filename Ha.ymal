@@ -78,7 +78,7 @@ action:
       - condition: template
         value_template: "{{ should_skip_notification }}"
     then:
-      - stop: "Skipping notification for being too soon.
+      - stop: "Skipping notification for being too soon."
 
   # Create camera snapshot
   - service: camera.snapshot
