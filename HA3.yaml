@@ -175,15 +175,6 @@ trigger:
   to: 'on'
 action:
 - variables:
-      camera_entities: "{{ device_entities(device_id(trigger.entity_id)) | select('match', '^camera\\.') | list }}"
-      camera_to_snapshot: >
-        {{
-        (camera_entities | select('match', '.*_snapshots_fluent$') | first) or
-        (camera_entities | select('match', '.*_snapshots_clear$') | first) or
-        (camera_entities | select('match', '.*_fluent$') | first) or
-        (camera_entities | first)
-        }}
-      image_file: "reo.jpg"
       should_skip_notification: >
         {%
           set other_sensor_times =
