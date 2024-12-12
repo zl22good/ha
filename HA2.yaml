@@ -115,8 +115,8 @@ blueprint:
       default: ''
     
   source_url: https://gist.github.com/McDAlexander/56eb3f2e421e283460b3d641fd002ea8
-mode: parallel
-max: 100
+mode: single
+max_exceeded: silent
 variables:
   notify_device: !input notify_device
   trigger_entities: !input trigger_entities
@@ -156,11 +156,13 @@ action:
             + [trigger.from_state.last_updated]
         %}
         {{ trigger.to_state.last_updated - other_sensor_times|max < timedelta(**time_delay) }}
+
   - if:
       - condition: template
         value_template: "{{ should_skip_notification }}"
     then:
       - stop: "Skipping notification for being too soon."
+
 - data_template:
     entity_id: !input doorbell_cam
     filename: /config/www/doorbell/{{ doorbell_cam }}.jpg
