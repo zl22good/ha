@@ -111,7 +111,7 @@ blueprint:
         action: {}
     time_delay:
       name: Time Delay Between Notification
-      description: In seconds, time between notifications 2.0
+      description: In seconds, time between notifications 3.0
       default: ''
     
   source_url: https://gist.github.com/McDAlexander/56eb3f2e421e283460b3d641fd002ea8
@@ -142,27 +142,6 @@ trigger:
   from: 'off'
   to: 'on'
 action:
- - variables:
-      camera_entities: "{{ device_entities(device_id(trigger.entity_id)) | select('match', '^camera\\.') | list }}"
-      should_skip_notification: >
-        {%
-          set other_sensor_times =
-            trigger_entities |
-            select('ne', trigger.entity_id) |
-            select('is_device_attr', 'id', device_id(trigger.entity_id)) |
-            expand |
-            map(attribute = 'last_updated') |
-            list
-            + [trigger.from_state.last_updated]
-        %}
-        {{ trigger.to_state.last_updated - other_sensor_times|max < timedelta(**time_delay) }}
-
-  - if:
-      - condition: template
-        value_template: "{{ should_skip_notification }}"
-    then:
-      - stop: "Skipping notification for being too soon."
-
 - data_template:
     entity_id: !input doorbell_cam
     filename: /config/www/doorbell/{{ doorbell_cam }}.jpg
