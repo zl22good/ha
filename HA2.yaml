@@ -109,6 +109,15 @@ blueprint:
       default: []
       selector:
         action: {}
+      retrigger_delay:
+      name: Retrigger Delay
+      description: Time to wait before triggering the same camera again.
+      default:
+        hours: 0
+        minutes: 0
+        seconds: 20
+      selector:
+        duration:
   source_url: https://gist.github.com/McDAlexander/56eb3f2e421e283460b3d641fd002ea8
 mode: parallel
 max: 100
@@ -130,12 +139,18 @@ variables:
   action_3_uri: !input action_3_uri
   third_action: !input third_action
   image_file: /local/doorbell/{{ doorbell_cam }}.jpg
+  retrigger_delay: !input retrigger_delay
 trigger:
   platform: state
   entity_id: !input trigger_entities
   from: 'off'
   to: 'on'
 action:
+ - if:
+      - condition: template
+        value_template: "{{ should_skip_notification }}"
+    then:
+      - stop: "Skipping notification for being too soon."
 - data_template:
     entity_id: !input doorbell_cam
     filename: /config/www/doorbell/{{ doorbell_cam }}.jpg
