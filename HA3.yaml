@@ -1,41 +1,28 @@
 blueprint:
-  name: Reolink Rich Notifications
-  description: >
-    Send Reolink rich notifications to an Android device.
+  name: Send actionable notifications for Android with Camera Snapshot
+  description: 'Send actionable notifications to an Android device.
+    For each action, you can open an URL, an application on the device or load a lovelace
+    view/dashboard.
 
-    Documentation: https://github.com/jterrace/ha-reolink-rich-notifications
+    If you plan to use a lovelace view the format would be /lovelace/test where test
+    is replaced by your defined path in the defined view.
 
+    If you plan to use a lovelace dashboard the format would be /lovelace-dashboard/view
+    where /lovelace-dashboard/ is replaced by your defined dashboard URL and view
+    is replaced by the defined path within that dashboard.
+
+    To pick the application to open, prefix app:// to the the package name.
+
+    If the device does not have the application installed then the Home Assistant
+    application will open to the default page.
+
+    If you define an action and an URI for a button, URI will take precedence over
+    action.
+
+    '
   domain: automation
   input:
     notify_device:
-      name: Devices to Notify
-      description: These mobile devices will receive a notification when alerts are triggered.
-      default: []
-      selector:
-        device:
-          integration: mobile_app
-          multiple: true
-
-    trigger_entities:
-      name: Trigger Sensors
-      description: These Reolink sensors will be monitored to determine when to send an alert.
-      selector:
-        entity:
-          multiple: true
-          filter:
-            - integration: reolink
-              domain: binary_sensor
-
-    retrigger_delay:
-      name: Retrigger Delay
-      description: Time to wait before triggering the same camera again.
-      default:
-        hours: 0
-        minutes: 0
-        seconds: 20
-      selector:
-        duration:
-        notify_device:
       name: Device to notify
       description: Device or group of devices for notification through mobile_app
         notification service. For example <notify.mobile_app_iphone>, <notify.all_devices>,
@@ -126,14 +113,11 @@ blueprint:
       name: Time Delay Between Notification
       description: In seconds, time between notifications 3.1
       default: ''
-
+    
+  source_url: https://gist.github.com/McDAlexander/56eb3f2e421e283460b3d641fd002ea8
 mode: parallel
 max: 100
-
 variables:
-  notify_device: !input notify_device
-  trigger_entities: !input trigger_entities
-  retrigger_delay: !input retrigger_delay
   notify_device: !input notify_device
   trigger_entities: !input trigger_entities
   doorbell_cam: !input doorbell_cam
@@ -152,45 +136,16 @@ variables:
   third_action: !input third_action
   time_delay: !input time_delay
   image_file: /local/doorbell/{{ now().minute }}.jpg
-
 trigger:
   platform: state
   entity_id: !input trigger_entities
-  from: "off"
-  to: "on"
-
+  from: 'off'
+  to: 'on'
 action:
-  - variables:
-      camera_entities: "{{ device_entities(device_id(trigger.entity_id)) | select('match', '^camera\\.') | list }}"
-      camera_to_snapshot: >
-        {{
-        (camera_entities | select('match', '.*_snapshots_fluent$') | first) or
-        (camera_entities | select('match', '.*_snapshots_clear$') | first) or
-        (camera_entities | select('match', '.*_fluent$') | first) or
-        (camera_entities | first)
-        }}
-      image_file: "reolink_rich_notifications/{{ camera_to_snapshot }}_{{ trigger.to_state.last_updated | as_timestamp | timestamp_custom('%M-%S') }}.jpg"
-      should_skip_notification: >
-        {%
-          set other_sensor_times =
-            trigger_entities |
-            select('ne', trigger.entity_id) |
-            select('is_device_attr', 'id', device_id(trigger.entity_id)) |
-            expand |
-            map(attribute = 'last_updated') |
-            list
-            + [trigger.from_state.last_updated]
-        %}
-        {{ trigger.to_state.last_updated - other_sensor_times|max < timedelta(**retrigger_delay) }}
-
-  - if:
-      - condition: template
-        value_template: "{{ should_skip_notification }}"
-    then:
-      - stop: "Skipping notification for being too soon."
-  - data_template:
+- data_template:
     entity_id: !input doorbell_cam
     filename: /config/www/doorbell/{{ now().minute }}.jpg
+  service: camera.snapshot
 - service: !input notify_device
   data:
     title: '{{ notification_title }}'
@@ -221,3 +176,5 @@ action:
     sequence: !input second_action
   - conditions: '{{ wait.trigger.event.data.action == ''action3'' }}'
     sequence: !input third_action
+- delay: 00:00:20
+- stop: "Notification Done"
