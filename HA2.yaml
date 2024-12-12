@@ -31,8 +31,8 @@ blueprint:
         text:
           type: search
           multiline: false
-    trigger_entity:
-      name: Trigger entity
+    trigger_entities:
+      name: Trigger entities
       description: Send the notification when this boolean turns on
       selector:
         entity: {}
@@ -109,7 +109,7 @@ mode: restart
 max_exceeded: silent
 variables:
   notify_device: !input notify_device
-  trigger_entity: !input trigger_entity
+  trigger_entities: !input trigger_entities
   doorbell_cam: !input doorbell_cam
   notification_title: !input notification_title
   notification_message: !input notification_message
@@ -124,16 +124,16 @@ variables:
   action_3_title: !input action_3_title
   action_3_uri: !input action_3_uri
   third_action: !input third_action
-  image_file: /local/doorbell/{{ trigger_entity }}.jpg
+  image_file: /local/doorbell/{{ trigger_entities }}.jpg
 trigger:
   platform: state
-  entity_id: !input trigger_entity
+  entity_id: !input trigger_entities
   from: 'off'
   to: 'on'
 action:
 - data_template:
     entity_id: !input doorbell_cam
-    filename: /config/www/doorbell/{{ trigger_entity }}.jpg
+    filename: /config/www/doorbell/{{ trigger_entities }}.jpg
   service: camera.snapshot
 - service: !input notify_device
   data:
