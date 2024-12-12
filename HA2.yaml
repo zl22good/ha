@@ -109,7 +109,7 @@ blueprint:
       default: []
       selector:
         action: {}
-      retrigger_delay:
+     retrigger_delay:
       name: Retrigger Delay
       description: Time to wait before triggering the same camera again.
       default:
