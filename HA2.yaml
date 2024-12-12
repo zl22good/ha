@@ -143,7 +143,7 @@ trigger:
   to: 'on'
 action:
 - condition: template
-      value_template: '{{(as_timestamp(now()) - as_timestamp(this.attributes.last_triggered)) | int(0) > ' + !input time_delay + ' }}'
+      value_template: '{{(as_timestamp(now()) - as_timestamp(this.attributes.last_triggered)) | int(0) > 20 }}'
 - data_template:
     entity_id: !input doorbell_cam
     filename: /config/www/doorbell/{{ doorbell_cam }}.jpg
