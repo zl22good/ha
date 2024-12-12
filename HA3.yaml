@@ -191,7 +191,6 @@ action:
   - data_template:
     entity_id: !input doorbell_cam
     filename: /config/www/doorbell/{{ now().minute }}.jpg
-  service: camera.snapshot
 - service: !input notify_device
   data:
     title: '{{ notification_title }}'
