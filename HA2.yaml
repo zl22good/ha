@@ -32,10 +32,10 @@ blueprint:
           type: search
           multiline: false
     trigger_entities:
-      name: Trigger entities
-      description: Send the notification when this boolean turns on
+      name: Trigger Sensors
+      description: These Reolink sensors will be monitored to determine when to send an alert.
       selector:
-        entity: 
+        entity:
           multiple: true
           filter:
             - integration: reolink
