@@ -156,13 +156,11 @@ action:
             + [trigger.from_state.last_updated]
         %}
         {{ trigger.to_state.last_updated - other_sensor_times|max < timedelta(**time_delay) }}
-
   - if:
       - condition: template
         value_template: "{{ should_skip_notification }}"
     then:
       - stop: "Skipping notification for being too soon."
-
 - data_template:
     entity_id: !input doorbell_cam
     filename: /config/www/doorbell/{{ doorbell_cam }}.jpg
