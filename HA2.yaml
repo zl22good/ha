@@ -150,11 +150,6 @@ action:
     entity_id: !input doorbell_cam
     filename: /config/www/doorbell/{{ doorbell_cam }}.jpg
   service: camera.snapshot
-- if:
-      - condition: template
-        value_template: "{{ should_skip_notification }}"
-    then:
-      - stop: "Skipping notification for being too soon."  
 - service: !input notify_device
   data:
     title: '{{ notification_title }}'
