@@ -141,7 +141,7 @@ trigger:
   entity_id: !input trigger_entities
   from: 'off'
   to: 'on'
-repeat:
+action:
 - data_template:
     entity_id: !input doorbell_cam
     filename: /config/www/doorbell/{{ doorbell_cam }}.jpg
