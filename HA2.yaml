@@ -36,6 +36,7 @@ blueprint:
       description: Send the notification when this boolean turns on
       selector:
         entity: {}
+           multiple: true
     doorbell_cam:
       name: Doorbell Cam
       description: The Camera from wich take photo for notification.
