@@ -110,7 +110,7 @@ blueprint:
       selector:
         action: {}
     time_delay:
-      name: Time Delay Between Notification 2.0
+      name: Time Delay Between Notification
       description: In seconds, time between notifications
       default: ''
     
@@ -176,3 +176,5 @@ action:
     sequence: !input second_action
   - conditions: '{{ wait.trigger.event.data.action == ''action3'' }}'
     sequence: !input third_action
+- delay:
+    seconds: !input time_delay
