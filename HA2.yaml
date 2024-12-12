@@ -35,7 +35,7 @@ blueprint:
       name: Trigger Sensors
       description: These Reolink sensors will be monitored to determine when to send an alert.
       selector:
-        entity:
+        entity:{}
           multiple: true
           filter:
             - integration: reolink
