@@ -176,4 +176,3 @@ action:
     sequence: !input second_action
   - conditions: '{{ wait.trigger.event.data.action == ''action3'' }}'
     sequence: !input third_action
-  - conditions: - delay: 00:00:20
