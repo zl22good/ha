@@ -135,7 +135,7 @@ variables:
   action_3_uri: !input action_3_uri
   third_action: !input third_action
   time_delay: !input time_delay
-  image_file: /local/doorbell/{{ doorbell_cam }}.jpg
+  image_file: /local/doorbell/{{ doorbell_cam }{now().minute}}.jpg
 trigger:
   platform: state
   entity_id: !input trigger_entities
