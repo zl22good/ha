@@ -142,6 +142,8 @@ trigger:
   from: 'off'
   to: 'on'
 action:
+- condition: template
+      value_template: '{{(as_timestamp(now()) - as_timestamp(this.attributes.last_triggered)) | int(0) > ' + !input time_delay + ' }}'
 - data_template:
     entity_id: !input doorbell_cam
     filename: /config/www/doorbell/{{ doorbell_cam }}.jpg
@@ -176,5 +178,3 @@ action:
     sequence: !input second_action
   - conditions: '{{ wait.trigger.event.data.action == ''action3'' }}'
     sequence: !input third_action
-- delay:
-    seconds: !input time_delay
