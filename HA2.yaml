@@ -111,7 +111,7 @@ blueprint:
         action: {}
     time_delay:
       name: Time Delay Between Notification
-      description: In seconds, time between notifications 3.0
+      description: In seconds, time between notifications 3.1
       default: ''
     
   source_url: https://gist.github.com/McDAlexander/56eb3f2e421e283460b3d641fd002ea8
