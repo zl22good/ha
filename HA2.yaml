@@ -36,10 +36,19 @@ blueprint:
       description: These Reolink sensors will be monitored to determine when to send an alert.
       selector:
         entity:
-          multiple: false
+          multiple: true
           filter:
             - integration: reolink
               domain: binary_sensor
+      retrigger_delay:
+      name: Retrigger Delay
+      description: Time to wait before triggering the same camera again.
+      default:
+        hours: 0
+        minutes: 0
+        seconds: 20
+      selector:
+        duration:
 
     doorbell_cam:
       name: Doorbell Cam
