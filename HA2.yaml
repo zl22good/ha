@@ -109,6 +109,10 @@ blueprint:
       default: []
       selector:
         action: {}
+    time_delay:
+      name: Time Delay Between Notification
+      description: In seconds, time between notifications
+      default: ''
     
   source_url: https://gist.github.com/McDAlexander/56eb3f2e421e283460b3d641fd002ea8
 mode: parallel
@@ -130,6 +134,7 @@ variables:
   action_3_title: !input action_3_title
   action_3_uri: !input action_3_uri
   third_action: !input third_action
+  time_delay: !input time_delay
   image_file: /local/doorbell/{{ doorbell_cam }}.jpg
 trigger:
   platform: state
