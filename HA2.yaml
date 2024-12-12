@@ -110,8 +110,8 @@ blueprint:
       selector:
         action: {}
   source_url: https://gist.github.com/McDAlexander/56eb3f2e421e283460b3d641fd002ea8
-mode: restart
-max_exceeded: silent
+mode: parallel
+max: 100
 variables:
   notify_device: !input notify_device
   trigger_entities: !input trigger_entities
