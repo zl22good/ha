@@ -110,7 +110,7 @@ blueprint:
       selector:
         action: {}
     time_delay:
-      name: Time Delay Between Notification
+      name: Time Delay Between Notification 2.0
       description: In seconds, time between notifications
       default: ''
     
