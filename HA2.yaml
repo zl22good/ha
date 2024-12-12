@@ -129,7 +129,7 @@ variables:
   action_3_title: !input action_3_title
   action_3_uri: !input action_3_uri
   third_action: !input third_action
-  image_file: /local/doorbell/{{ trigger_entities }}.jpg
+  image_file: /local/doorbell/{{ doorbell_cam }}.jpg
 trigger:
   platform: state
   entity_id: !input trigger_entities
@@ -138,7 +138,7 @@ trigger:
 action:
 - data_template:
     entity_id: !input doorbell_cam
-    filename: /config/www/doorbell/{{ trigger_entities }}.jpg
+    filename: /config/www/doorbell/{{ doorbell_cam }}.jpg
   service: camera.snapshot
 - service: !input notify_device
   data:
