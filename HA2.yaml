@@ -142,8 +142,6 @@ trigger:
   from: 'off'
   to: 'on'
 action:
-- condition: template
-      value_template: '{{ (as_timestamp(now()) - as_timestamp(states.automation.automation_name.attributes.last_triggered | default(0)) | int > 20)}}'
 - data_template:
     entity_id: !input doorbell_cam
     filename: /config/www/doorbell/{{ doorbell_cam }}.jpg
