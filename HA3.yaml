@@ -174,8 +174,7 @@ trigger:
   from: 'off'
   to: 'on'
 action:
-- variables:
-      should_skip_notification: >
+-      should_skip_notification: >
         {%
           set other_sensor_times =
             trigger_entities |
