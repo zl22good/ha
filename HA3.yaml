@@ -49,6 +49,13 @@ blueprint:
           filter:
             - domain: camera
           multiple: false
+
+    helper:
+      name: Helper Variable
+      description: Helper 
+      selector:
+        entity:
+          multiple: false
     notification_title:
       name: Notification title (Optional)
       description: The title of the notification
