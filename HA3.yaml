@@ -49,6 +49,16 @@ blueprint:
           filter:
             - domain: camera
           multiple: false
+
+      helper:
+      name: helper
+      description: helper
+      selector:
+        entity:
+          filter:
+            - domain: helper
+          multiple: false
+          
     notification_title:
       name: Notification title (Optional)
       description: The title of the notification
@@ -142,6 +152,13 @@ trigger:
   from: 'off'
   to: 'on'
 action:
+- if:
+  - condition: state
+    entity_id: input_boolean.driveway_helper
+    state: "off"
+  then:
+  - stop: TooSoon
+    response_variable: TooSoon
 - data_template:
     entity_id: !input doorbell_cam
     filename: /config/www/doorbell/{{ now().minute }}.jpg
@@ -176,5 +193,3 @@ action:
     sequence: !input second_action
   - conditions: '{{ wait.trigger.event.data.action == ''action3'' }}'
     sequence: !input third_action
-- delay: 00:00:20
-- stop: "Notification Done"
