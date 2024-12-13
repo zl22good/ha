@@ -149,8 +149,8 @@ trigger:
   from: 'off'
   to: 'on'
 action:
-- if: '{{ !input helper == 0 }}'
-    - condition: 
+- if: 
+    - condition: '{{ !input helper == 0 }}'
   then:
     - stop: "Skipping notification for being too soon."
   
