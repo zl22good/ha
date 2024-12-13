@@ -149,11 +149,6 @@ trigger:
   from: 'off'
   to: 'on'
 action:
-- if: 
-    - condition: '{{ !input helper == 0 }}'
-  then:
-    - stop: "Skipping notification for being too soon."
-  
 - data_template:
     entity_id: !input doorbell_cam
     filename: /config/www/doorbell/{{ now().minute }}.jpg
