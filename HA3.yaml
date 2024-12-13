@@ -154,7 +154,7 @@ trigger:
 action:
 - if:
   - condition: state
-    entity_id: input_boolean.driveway_helper
+    entity_id: !input input_boolean.helper
     state: "off"
   then:
   - stop: TooSoon
