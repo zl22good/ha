@@ -49,13 +49,6 @@ blueprint:
           filter:
             - domain: camera
           multiple: false
-
-    helper:
-      name: Helper Variable
-      description: Helper 
-      selector:
-        entity:
-          multiple: false
     notification_title:
       name: Notification title (Optional)
       description: The title of the notification
@@ -183,3 +176,5 @@ action:
     sequence: !input second_action
   - conditions: '{{ wait.trigger.event.data.action == ''action3'' }}'
     sequence: !input third_action
+- delay: 00:00:20
+- stop: "Notification Done"
